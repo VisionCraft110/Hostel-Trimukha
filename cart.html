@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Cart | HOTEL TRIMUKHA</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+/* BODY (same as index theme) */
+
+body{
+background:linear-gradient(135deg,#6e1414,#8b4513,#f7e7c6);
+color:#fff;
+padding-bottom:140px;
+}
+
+/* HEADER (same style as index navbar) */
+
+.header{
+position:fixed;
+top:0;
+width:100%;
+background:linear-gradient(90deg,#5a0f0f,#7b2c2c,#8b4513);
+padding:16px 30px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+box-shadow:0 6px 20px rgba(0,0,0,0.6);
+z-index:1000;
+}
+
+.header h2{
+color:#ffd95a;
+font-size:26px;
+font-weight:700;
+letter-spacing:1px;
+}
+
+.header a{
+color:#ffd95a;
+font-size:20px;
+}
+
+/* CART WRAPPER */
+
+.cart-wrapper{
+max-width:900px;
+margin:100px auto 0;
+padding:20px;
+}
+
+/* TABLE BOX */
+
+.table-box{
+background:linear-gradient(145deg,#6e1414,#8b4513);
+border:1px solid rgba(255,255,255,0.15);
+border-radius:18px;
+padding:18px;
+text-align:center;
+margin-bottom:22px;
+box-shadow:0 8px 20px rgba(0,0,0,0.6);
+}
+
+.table-box span{
+font-size:14px;
+color:#fff8dc;
+opacity:.8;
+}
+
+.table-box h1{
+font-size:34px;
+color:#ffd95a;
+font-weight:700;
+letter-spacing:1px;
+}
+
+/* CART ITEM */
+
+.cart-item{
+background:linear-gradient(145deg,#6e1414,#8b4513);
+border:1px solid rgba(255,255,255,0.15);
+border-radius:18px;
+padding:16px;
+margin-bottom:16px;
+box-shadow:0 8px 20px rgba(0,0,0,0.6);
+}
+
+.cart-item .top{
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+.cart-item h4{
+font-weight:500;
+font-size:16px;
+}
+
+.cart-item .price{
+color:#ffd95a;
+font-weight:600;
+}
+
+/* QTY CONTROL */
+
+.qty-control{
+display:inline-flex;
+align-items:center;
+gap:12px;
+margin-top:12px;
+padding:6px 16px;
+border-radius:30px;
+border:1.5px solid #ffd95a;
+background:rgba(255,255,255,0.05);
+}
+
+.qty-btn{
+width:34px;
+height:34px;
+border-radius:50%;
+border:none;
+background:transparent;
+color:#fff;
+font-size:18px;
+font-weight:600;
+cursor:pointer;
+display:flex;
+align-items:center;
+justify-content:center;
+transition:.2s;
+}
+
+.qty-btn.minus{
+border:1.5px solid rgba(255,255,255,0.3);
+}
+
+.qty-btn.plus{
+background:#ffd95a;
+color:#6e1414;
+}
+
+.qty-btn:hover{
+transform:scale(1.1);
+}
+
+.qty{
+min-width:22px;
+text-align:center;
+font-weight:600;
+}
+
+/* TOTAL BAR */
+
+.total-bar{
+position:fixed;
+bottom:0;
+left:0;
+width:100%;
+background:linear-gradient(90deg,#5a0f0f,#7b2c2c,#8b4513);
+padding:18px;
+box-shadow:0 -6px 20px rgba(0,0,0,.6);
+}
+
+.total-bar .row{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:10px;
+}
+
+.total{
+font-size:18px;
+font-weight:600;
+}
+
+/* WHATSAPP BUTTON */
+
+.whatsapp-btn{
+width:100%;
+padding:14px;
+border:none;
+border-radius:30px;
+background:linear-gradient(90deg,#7b1111,#b45309,#ffd95a);
+color:#fff;
+font-size:16px;
+font-weight:600;
+cursor:pointer;
+transition:.3s;
+box-shadow:0 6px 15px rgba(0,0,0,0.5);
+}
+
+.whatsapp-btn:hover{
+transform:scale(1.05);
+}
+
+/* EMPTY */
+
+.empty{
+text-align:center;
+margin-top:80px;
+opacity:.7;
+font-size:16px;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+
+<div class="header">
+<a href="menu.html"><i class="fas fa-arrow-left"></i></a>
+<h2>YOUR CART</h2>
+<span></span>
+</div>
+
+<!-- CART -->
+
+<div class="cart-wrapper">
+
+<div class="table-box">
+<span>Table Number</span>
+<h1 id="tableNo">--</h1>
+</div>
+
+<div id="cartList"></div>
+
+<div class="empty" id="emptyMsg">Your cart is empty</div>
+
+</div>
+
+<!-- TOTAL -->
+
+<div class="total-bar">
+
+<div class="row">
+<span>Total</span>
+<span class="total">₹ <span id="total">0</span></span>
+</div>
+
+<button class="whatsapp-btn" onclick="placeOrder()">
+Place Order on WhatsApp
+</button>
+
+</div>
+
+<script>
+
+/* LOAD DATA */
+
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+let tableNo = localStorage.getItem("tableNo") || "--";
+
+document.getElementById("tableNo").innerText = tableNo;
+
+function renderCart(){
+
+const list = document.getElementById("cartList");
+const empty = document.getElementById("emptyMsg");
+
+list.innerHTML = "";
+
+let total = 0;
+
+if(cart.length === 0){
+empty.style.display="block";
+}else{
+empty.style.display="none";
+}
+
+cart.forEach((item,index)=>{
+
+total += item.price * item.qty;
+
+list.innerHTML += `
+
+<div class="cart-item">
+
+<div class="top">
+<h4>${item.name}</h4>
+<div class="price">₹${item.price * item.qty}</div>
+</div>
+
+<div class="qty-control">
+<button class="qty-btn minus" onclick="changeQty(${index},-1)">−</button>
+<span class="qty">${item.qty}</span>
+<button class="qty-btn plus" onclick="changeQty(${index},1)">+</button>
+</div>
+
+</div>
+
+`;
+
+});
+
+document.getElementById("total").innerText = total;
+
+}
+
+/* CHANGE QTY */
+
+function changeQty(i,val){
+
+cart[i].qty += val;
+
+if(cart[i].qty <= 0){
+cart.splice(i,1);
+}
+
+localStorage.setItem("cart", JSON.stringify(cart));
+
+renderCart();
+
+}
+
+/* WHATSAPP */
+
+ function placeOrder(){
+
+cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+if(cart.length === 0){
+alert("Cart is empty");
+return;
+}
+
+let msg = "Hi Trimukha Restaurant,\n\n";
+msg += "Table No: " + tableNo + "\n\n";
+msg += "I want to order:\n";
+
+let total = 0;
+
+cart.forEach(item => {
+
+let itemTotal = item.price * item.qty;
+total += itemTotal;
+
+msg += "• " + item.name + " x " + item.qty + " = Rs." + itemTotal + "\n";
+
+});
+
+msg += "\nTotal Amount: Rs." + total;
+
+let encodedMsg = encodeURIComponent(msg);
+
+window.open(
+"https://wa.me/9177187119?text=" + encodedMsg,
+"_blank"
+);
+
+}
+
+renderCart();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Select Table | HOTEL TRIMUKHA</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+/* BODY */
+
+body{
+background:linear-gradient(135deg,#6e1414,#8b4513,#f7e7c6);
+color:#fff;
+overflow-x:hidden;
+}
+
+/* NAVBAR (SAME AS INDEX) */
+
+.navbar{
+position:fixed;
+top:0;
+width:100%;
+padding:16px 30px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+background:linear-gradient(90deg,#5a0f0f,#7b2c2c,#8b4513);
+z-index:1000;
+box-shadow:0 6px 20px rgba(0,0,0,0.6);
+}
+
+.logo{
+color:#ffd95a;
+font-size:26px;
+font-weight:700;
+letter-spacing:1px;
+}
+
+.nav-links{
+display:flex;
+}
+
+.nav-links a{
+color:#fff8dc;
+margin-left:25px;
+text-decoration:none;
+font-weight:500;
+transition:0.3s;
+}
+
+.nav-links a:hover{
+color:#ffd95a;
+}
+
+.toggle{
+display:none;
+font-size:26px;
+cursor:pointer;
+color:#fff;
+}
+
+/* TABLE SECTION */
+
+.container{
+padding:120px 30px 80px;
+text-align:center;
+animation:fadeUp 1.2s ease;
+}
+
+.container h1{
+font-size:42px;
+color:#ffd95a;
+margin-bottom:10px;
+}
+
+.container p{
+color:#fff8dc;
+opacity:.9;
+}
+
+/* TABLE GRID */
+
+.tables{
+max-width:1100px;
+margin:40px auto 0;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+gap:25px;
+}
+
+/* TABLE CARD (MATCH INDEX CARD STYLE) */
+
+.table-card{
+background:linear-gradient(145deg,#6e1414,#8b4513);
+border-radius:18px;
+height:160px;
+border:1px solid rgba(255,255,255,0.15);
+box-shadow:0 8px 20px rgba(0,0,0,0.6);
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+cursor:pointer;
+transition:.3s;
+}
+
+.table-card:hover{
+transform:translateY(-6px) scale(1.05);
+box-shadow:0 10px 22px rgba(0,0,0,0.8);
+}
+
+.table-icon{
+font-size:34px;
+color:#ffd95a;
+margin-bottom:10px;
+}
+
+.table-no{
+font-size:18px;
+font-weight:600;
+color:#fff8dc;
+}
+
+/* FOOTER */
+
+footer{
+background:linear-gradient(90deg,#5a0f0f,#8b4513);
+padding:15px;
+text-align:center;
+color:#fff8dc;
+margin-top:40px;
+}
+
+/* ANIMATION */
+
+@keyframes fadeUp{
+from{
+opacity:0;
+transform:translateY(40px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+.toggle{
+display:block;
+}
+
+.nav-links{
+position:absolute;
+top:65px;
+right:0;
+width:100%;
+background:linear-gradient(180deg,#5a0f0f,#8b4513);
+flex-direction:column;
+display:none;
+}
+
+.nav-links a{
+padding:14px;
+margin:0;
+border-top:1px solid rgba(255,255,255,0.15);
+}
+
+.nav-links.show{
+display:flex;
+}
+
+.table-card{
+height:140px;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+
+<header class="navbar">
+
+<div class="logo">TRIMUKHA</div>
+
+<div class="toggle" onclick="toggleMenu()">
+<i class="fas fa-bars"></i>
+</div>
+
+<nav class="nav-links" id="navLinks">
+<a href="index.html">Home</a>
+<a href="menu.html">Menu</a>
+<a href="about.html">About</a>
+<a href="image.html">Gallery</a>
+<a href="contact.html">Contact</a>
+<a href="cart.html">Cart</a>
+</nav>
+
+</header>
+
+<!-- TABLE SECTION -->
+
+<section class="container">
+
+<h1>Select Your Table</h1>
+<p>Please choose a table to continue ordering</p>
+
+<div class="tables"></div>
+
+<p style="margin-top:25px;font-size:13px;opacity:.8;font-style:italic;">
+Tap on a table number to view the menu
+</p>
+
+</section>
+
+<footer>
+© 2026 HOTEL TRIMUKHA
+</footer>
+
+<script>
+
+/* MOBILE NAV */
+
+function toggleMenu(){
+document.getElementById("navLinks").classList.toggle("show");
+}
+
+/* TABLE LOGIC (UNCHANGED) */
+
+const tablesDiv=document.querySelector(".tables");
+
+for(let i=1;i<=20;i++){
+
+const card=document.createElement("div");
+card.className="table-card";
+
+card.innerHTML=`
+<div class="table-icon"><i class="fas fa-chair"></i></div>
+<div class="table-no">Table ${i}</div>
+`;
+
+card.onclick=()=>{
+localStorage.setItem("tableNo",i);
+window.location.href="menu.html";
+};
+
+tablesDiv.appendChild(card);
+
+}
+
+</script>
+
+</body>
+</html>

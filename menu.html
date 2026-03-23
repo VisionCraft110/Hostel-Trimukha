@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Menu | HOTEL TRIMUKHA</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+/* BODY BACKGROUND IMAGE */
+
+body{
+
+background:
+linear-gradient(rgba(0,0,0,0.70),rgba(0,0,0,0.80))
+, 
+url("tri.jpg") ;
+
+background-size:cover;
+background-position:center;
+background-attachment:fixed;
+
+color:#fff;
+padding-bottom:100px;
+
+}
+
+/* HEADER */
+/* BACK BUTTON */
+
+.back-btn{
+position:absolute;
+left:20px;
+top:18px;
+width:36px;
+height:36px;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+text-decoration:none;
+color:#ffd95a;
+font-size:18px;
+background:linear-gradient(135deg,#6e1414,#8b4513);
+box-shadow:0 4px 10px rgba(0,0,0,0.5);
+transition:0.3s;
+}
+
+.back-btn:hover{
+transform:scale(1.1);
+color:#fff;
+}
+.table-header{
+position:sticky;
+top:0;
+z-index:1000;
+padding:15px;
+background:linear-gradient(135deg,#6e1414,#8b4513);
+box-shadow:0 6px 20px rgba(0,0,0,0.6);
+}
+
+.table-card{
+max-width:900px;
+margin:auto;
+padding:25px 18px;
+border-radius:20px;
+background:linear-gradient(145deg,#7b2c2c,#8b453);
+position:relative;
+text-align:center;
+box-shadow:0 6px 20px rgba(0,0,0,0.6);
+}
+
+.corner-table{
+position:absolute;
+top:15px;
+left:20px;
+background:#ffd95a;
+color:#6e1414;
+padding:5px 14px;
+font-size:12px;
+border-radius:20px;
+font-weight:600;
+}
+
+.cart-icon{
+position:absolute;
+top:18px;
+right:20px;
+cursor:pointer;
+color:#ffd95a;
+font-size:20px;
+}
+
+.cart-icon span{
+position:absolute;
+top:-8px;
+right:-10px;
+background:#ffd95a;
+color:#6e1414;
+font-size:11px;
+padding:2px 6px;
+border-radius:50%;
+}
+
+/* CATEGORY BAR */
+
+.category-bar{
+position:sticky;
+top:110px;
+z-index:900;
+padding:12px;
+overflow-x:auto;
+white-space:nowrap;
+background:linear-gradient(135deg,#6e1414,#8b4513);
+}
+
+.category-btn{
+display:inline-block;
+margin-right:8px;
+padding:8px 18px;
+border-radius:20px;
+border:2px solid #ffd95a;
+background:transparent;
+color:#fff8dc;
+cursor:pointer;
+font-size:13px;
+transition:0.3s;
+}
+
+.category-btn.active,
+.category-btn:hover{
+background:#ffd95a;
+color:#6e1414;
+}
+
+/* MENU */
+
+.menu-container{
+max-width:900px;
+margin:auto;
+padding:20px;
+}
+
+.menu-category{
+margin-bottom:40px;
+}
+
+.menu-category h2{
+color:#ffd95a;
+margin-bottom:14px;
+border-left:4px solid #ffd95a;
+padding-left:10px;
+}
+
+.item{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:12px 0;
+border-bottom:1px dashed rgba(255,255,255,0.3);
+}
+
+.add-btn{
+background:linear-gradient(90deg,#7b1111,#b45309,#ffd95a);
+border:none;
+color:#fff;
+padding:6px 18px;
+border-radius:20px;
+cursor:pointer;
+font-weight:600;
+transition:0.3s;
+}
+
+.add-btn:hover{
+transform:scale(1.05);
+box-shadow:0 6px 15px rgba(0,0,0,0.5);
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="table-header">
+    <a href="index.html" class="back-btn">
+<i class="fas fa-arrow-left"></i>
+</a>
+</div>
+<div class="table-card">
+
+<div class="corner-table" id="tableNo">TABLE --</div>
+
+<h3>DINE IN ORDER</h3>
+
+<div class="cart-icon" onclick="goToCart()">
+<i class="fas fa-shopping-cart"></i>
+<span id="cartCount">0</span>
+</div>
+
+</div>
+</div>
+
+<div class="category-bar" id="categoryBar"></div>
+
+<div class="menu-container" id="menuContainer"></div>
+
+<script>
+
+/* ===== MENU DATA ===== */
+
+const menuData = {
+
+  "soups": [
+  { name: "Cream of Tomato Soup", price: 260 },
+  { name: "Manchow Soup (Veg)", price: 260 },
+  { name: "Manchow Soup (Non Veg)", price: 310 },
+  { name: "Sweet Corn Soup (Veg)", price: 260 },
+  { name: "Sweet Corn Soup (Non Veg)", price: 310 },
+  { name: "Hot & Sour Soup (Veg)", price: 260 },
+  { name: "Hot & Sour Soup (Non Veg)", price: 310 },
+  { name: "Lemon Coriander Soup (Veg)", price: 260 },
+  { name: "Lemon Coriander Soup (Non Veg)", price: 310 },
+  { name: "Mutton Marag Soup", price: 420 }
+],
+
+startersVeg: [
+  { name: "Veg Manchurian (Dry)", price: 269 },
+  { name: "Veg Manchurian (Wet)", price: 269 },
+  { name: "Paneer Manchurian", price: 289 },
+  { name: "Paneer 65", price: 289 },
+  { name: "Chilli Paneer", price: 289 },
+  { name: "Paneer Majestic", price: 289 },
+  { name: "Dragon Paneer", price: 289 },
+  { name: "Gobhi Manchurian", price: 249 },
+  { name: "Gobhi 65", price: 249 },
+  { name: "Mushroom 65", price: 269 },
+  { name: "Chilli Mushroom", price: 269 },
+  { name: "Mushroom Manchurian", price: 269 },
+  { name: "Baby Corn Manchurian", price: 269 },
+  { name: "Chilli Baby Corn", price: 269 },
+  { name: "Crispy Veg", price: 269 },
+  { name: "Spring Roll", price: 279 },
+  { name: "Shanghai Roll", price: 279 }
+],
+
+nonVegStarters: [
+  { name: "Chilli Chicken", price: 349 },
+  { name: "Chicken Manchurian", price: 349 },
+  { name: "Chicken 65", price: 349 },
+  { name: "Chicken 555", price: 349 },
+  { name: "Garlic Chicken", price: 349 },
+  { name: "Lemon Chicken", price: 349 },
+  { name: "Dragon Chicken", price: 349 },
+  { name: "Chicken Corriander", price: 349 },
+  { name: "Crispy Chicken", price: 349 },
+  { name: "Butter Garlic Chicken", price: 349 },
+  { name: "Chicken Lolipop", price: 369 },
+  { name: "Chicken Drumsticks", price: 369 },
+  { name: "Pepper Chicken", price: 349 },
+  { name: "Spicy Fry Chicken", price: 349 },
+  { name: "Schezwan Chicken", price: 349 },
+  { name: "Chicken Kung Pao", price: 349 },
+  { name: "Chicken Malaysian", price: 349 },
+  { name: "Honey Chicken", price: 349 },
+  { name: "Pepper Mutton", price: 480 },
+  { name: "Papdi Mutton", price: 489 },
+  { name: "Chilli Mutton", price: 480 },
+],
+
+seaFoodStarters: [
+  { name: "Pepper Fish", price: 389 },
+  { name: "Chilli Fish", price: 389 },
+  { name: "Fish65", price: 389 },
+  { name: "Schezwan Fish", price: 389 },
+  { name: "Ginger Fish", price: 389 },
+  { name: "Lemon Fish", price: 389 },
+  { name: "Apollo Fish", price: 389 },
+  { name: "Chilli Prawns", price: 389 },
+  { name: "Loose Prawns", price: 389 },
+  { name: "Prawns Manchurian", price: 389 },
+  { name: "Prawns 65", price: 389 },
+  { name: "Ginger Prawns", price: 389 },
+  { name: "Butter Garlic Prawns", price: 389 },
+  { name: "Schezwan Prawns", price: 389 },
+  { name: "Golden Fried Prawns", price: 389 },
+  { name: "Pepper Prawns", price: 389 }
+],
+
+mainCourseVegCurries: [
+  { name: "Dal Tadka", price: 180 },
+  { name: "Dal Fry", price: 160 },
+  { name: "Palak Dal", price: 210 },
+  { name: "Paneer Butter Masala", price: 269 },
+  { name: "Kadai Paneer", price: 269 },
+  { name: "Palak Paneer", price: 269 },
+  { name: "Methi Chaman", price: 269 },
+  { name: "Mix Veg Curry", price: 269 },
+  { name: "Kadai Veg", price: 269 },
+  { name: "Veg Chatpat", price: 269 },
+  { name: "Kaju Masala", price: 279 },
+  { name: "Kaju Paneer", price: 279 },
+  { name: "Veg Nizami Handi", price: 329 },
+  { name: "Kadai Mushroom", price: 249 },
+  { name: "Paneer Tikka Masala", price: 329 },
+  { name: "Paneer Lababdar", price: 319 },
+  { name: "Veg Kolhapuri", price: 259 },
+  { name: "Veg Do Pyaza", price: 259 },
+  { name: "Paneer Do Pyaza", price: 289 },
+  { name: "Veg Jaipuri", price: 289 },
+  { name: "Veg Diwani Handi", price: 289 },
+  { name: "Baby Corn Masala", price: 269 }
+],
+
+nonVegCurries: [
+  { name: "Telangana Chicken Curry", price: 349 },
+  { name: "Chicken Masala", price: 349 },
+  { name: "Chicken Tikka Masala", price: 369 },
+  { name: "Patiyala Chicken", price: 349 },
+  { name: "Dum Ka Chicken", price: 369 },
+  { name: "Afghani Chicken", price: 369 },
+  { name: "Chicken Do Pyaza", price: 349 },
+  { name: "Murgh Musallam", price: 429 },
+  { name: "Butter Chicken", price: 359 },
+  { name: "Methi Chicken", price: 359 },
+  { name: "Zafrani Murg", price: 359 },
+  { name: "Achari Chicken", price: 359 },
+  { name: "Chicken Hyderabad", price: 369 },
+  { name: "Gongura Chicken Fry", price: 369 },
+  { name: "Gongura Chicken Curry", price: 379 },
+  { name: "Telangana Mutton Curry", price: 479 },
+  { name: "Mutton Masala", price: 449 },
+  { name: "Kadai Mutton", price: 449 },
+  { name: "Mutton Do Pyaza", price: 449 },
+  { name: "Mutton Rogan Josh", price: 459 },
+  { name: "Mutton Keema Masala", price: 479 },
+  { name: "Andhra Mutton Curry", price: 479 },
+  { name: "Mutton Kalimirch", price: 479 },
+  { name: "Mutton Fry", price: 479 },
+  { name: "Gongura Mutton Curry", price: 469 },
+  { name: "Fish Masala", price: 429 },
+  { name: "Andhra Fish Curry", price: 449 },
+  { name: "Telangana Fish Fry", price: 449 },
+  { name: "Prawns Masala", price: 429 },
+  { name: "Egg Curry", price: 229 },
+  { name: "Egg Masala", price: 229 }
+],
+
+biryani: [
+  { name: "Veg Biryani", price: 230 },
+  { name: "Paneer Biryani", price: 249 },
+  { name: "Kaju Biryani", price: 249 },
+  { name: "Mushroom Biryani", price: 229 },
+  { name: "Egg Biryani", price: 219 },
+  { name: "Gongura Chicken Biryani", price: 350 },
+  { name: "Fry Piece Biryani", price: 279 },
+  { name: "Chicken Biryani mini",price:190},
+  { name: "Chicken Biryani full", price: 320 },
+  { name: "Chicken Biryani family", price: 540 },
+  { name: "Chicken Biryani jumbo", price: 720 },
+  { name: "Nattu Kodi Biryani", price: 420 },
+  { name: "Lollipop Biryani", price: 389 },
+  { name: "Mutton Biryani mini", price: 240 },
+  { name: "Mutton Biryani full", price: 380 },
+  { name: "Mutton Biryani family", price: 650 },
+  { name: "Mutton Biryani jumbo", price: 880 },
+  { name: "Mutton Biryani", price: 420},
+  { name: "Fish Biryani", price: 289 },
+  { name: "Prawns Biryani", price: 289 },
+  { name: "Chicken 65 Biryani (Spcl)", price: 340 },
+  { name: "Trimukha Spcl Combo Biryani", price: 680 },
+  { name: "Potlam Chicken Biryani", price: 360 },
+  { name: "Mutton Kheema Biryani", price: 480 },
+  { name: "Bagara Rice", price: 189 },
+  { name: "Plain Rice", price: 149 }
+],
+
+pulao: [
+  { name: "Gutti Vankaya Pulao", price: 289 },
+  { name: "Avakaya Pulao", price: 289 },
+  { name: "Navratan Pulao", price: 289 },
+  { name: "Mix Veg Pulao", price: 289 },
+  { name: "Pachi Mirchi Paneer Pulao", price: 320 },
+  { name: "Andhra Avakaya Kodi Pulao", price: 380 },
+  { name: "Pachi Mirchi Kodi Pulao", price: 360 },
+  { name: "Gongura Chicken Pulao", price: 360 },
+  { name: "Yata Mamsam Pulao", price: 420 },
+  { name: "Trimukha Spcl Mutton Pulao", price: 420 },
+  { name: "Kheema Pulao", price: 460 }
+],
+
+chinese: [
+  { name: "Veg Fried Rice", price: 189 },
+  { name: "Veg Schezwan Rice", price: 189 },
+  { name: "Mixed Veg Fried Rice", price: 200 },
+  { name: "Singapore Fried Rice", price: 200 },
+  { name: "Egg Fried Rice", price: 219 },
+  { name: "Egg Schezwan Fried Rice", price: 219 },
+  { name: "Chicken Fried Rice", price: 239 },
+  { name: "Schezwan Chicken Fried Rice", price: 239 },
+  { name: "Mixed Non-Veg Fried Rice", price: 289 },
+  { name: "Veg Noodles", price: 189 },
+  { name: "Veg Schezwan Noodles", price: 189 },
+  { name: "Veg Hakka Noodles", price: 229 },
+  { name: "Veg Soft Noodles", price: 249 },
+  { name: "Egg Noodles", price: 219 },
+  { name: "Egg Schezwan Noodles", price: 219 },
+  { name: "Chicken Noodles", price: 239 },
+  { name: "Chicken Schezwan Noodles", price: 239 },
+  { name: "Mixed Non Veg Noodles", price: 289 }
+],
+
+tandoorVeg: [
+  { name: "Panner Tikka", price: 289 },
+  { name: "Malai Paneer Tikka", price: 289 },
+  { name: "Achari Paneer Tikka", price: 289 },
+  { name: "Paneer Seekh Kebab", price: 289 },
+  { name: "Pahadi Paneer Tikka", price: 289 },
+  { name: "Paneer Mugdani", price: 289 },
+  { name: "Veg Seekh Kebab", price: 289 },
+  { name: "Gobi Tikka", price: 189 },
+  { name: "Baby Corn Tandoor", price: 189 },
+  { name: "Mushroom Cheese Moti", price: 289 },
+  { name: "Mushroom Multani", price: 289 },
+  { name: "Mushroom Tikka", price: 289 },
+  { name: "Tandoori Aloo", price: 189 },
+  { name: "Tandoori Broccoli", price: 189 },
+  { name: "Tandoori Mix Veg", price: 289 }
+],
+
+tandoorNonVeg: [
+  { name: "Chicken Tikka", price: 369 },
+  { name: "Angara Chicken Tikka", price: 369 },
+  { name: "Achari Chicken Tikka", price: 369 },
+  { name: "Murg Malai Kebab", price: 369 },
+  { name: "Reshmi Kebab", price: 369 },
+  { name: "Pahadi Kebab", price: 369 },
+  { name: "Chicken Haryali Kebab", price: 369 },
+  { name: "Chilli Garlic Kebab", price: 369 },
+  { name: "Chicken Seekh Kebab", price: 369 },
+  { name: "Chicken Sholay Kebab", price: 369 },
+  { name: "Jaljala Kebab", price: 389 },
+  { name: "Chicken Karela Kebab", price: 429 },
+  { name: "Lahori Chicken Tikka", price: 389 },
+  { name: "Adraki Chicken Tikka", price: 389 },
+  { name: "Tangdi Kebab (4pcs)", price: 410 },
+  { name: "Tandoori Chicken Half", price: 329 },
+  { name: "Tandoori Chicken Full", price: 600 },
+  { name: "Kalmi Kabab", price: 410 },
+  { name: "Chicken Gilafi Kebab", price: 369 },
+  { name: "Nawabi Tandoor Half", price: 340 },
+  { name: "Nawabi Tandoor Full", price: 629 },
+  { name: "Afghani Kebab", price: 389 },
+  { name: "Chicken Dilkush Kebab", price: 410 },
+  { name: "Mutton Boti Kebab", price: 480 },
+  { name: "Mutton Anghara", price: 480 },
+  { name: "Mutton Kali Mirchi Kebab", price: 480 },
+  { name: "Mutton Lahori Seekh Kebab", price: 480 },
+  { name: "Mutton Gilafi Seekh Kebab", price: 480 },
+  { name: "Mutton Seekh Kebab", price: 480 },
+  { name: "Malai Mutton Tikka", price: 510 },
+  { name: "Mutton Galouti Kebab", price: 489 }
+],
+
+seaFoodTandoor: [
+  { name: "Fish Tikka", price: 389 },
+  { name: "Hariyali Fish Tikka", price: 389 },
+  { name: "Achari Fish Tikka", price: 389 },
+  { name: "Fish Seekh Kabab", price: 389 },
+  { name: "Kali Mirchi Fish Tikka", price: 389 },
+  { name: "Prawns Tandoor", price: 389 },
+  { name: "Malai Prawns Tikka", price: 429 },
+  { name: "Lasooni Prawn Tikka", price: 389 },
+  { name: "Kali Mirchi Prawns Tikka", price: 389 }
+],
+
+tandoorPlatters: [
+  { name: "Mix Veg Platter", price: 679 },
+  { name: "Chicken Platter", price: 889 },
+  { name: "Mutton Platter", price: 1410 },
+  { name: "Sea Food Platter", price: 1210 }
+],
+
+roti: [
+  { name: "Tandoor Roti", price: 35 },
+  { name: "Butter Roti", price: 40 },
+  { name: "Methi Roti", price: 35 },
+  { name: "Garlic Roti", price: 40 },
+  { name: "Til Roti", price: 45 },
+],
+
+naan: [
+  { name: "Plain Naan", price: 40 },
+  { name: "Butter Naan", price: 45 },
+  { name: "Kothmir Naan", price: 45 },
+  { name: "Pudina Naan", price: 45 },
+  { name: "Garlic Naan", price: 50 },
+  { name: "Kashmiri Naan", price: 120 },
+  { name: "Kheema Naan", price: 149 },
+],
+
+kulcha: [
+  { name: "Masala Kulcha", price: 59 },
+  { name: "Paneer Kulcha", price: 89 },
+  { name: "Chicken Kulcha", price: 120 },
+  { name: "Mutton Kulcha", price: 139 },
+],
+
+paratha: [
+  { name: "Lacha Paratha", price: 55 },
+  { name: "Butter Paratha", price: 65 },
+  { name: "Aloo Paratha", price: 75 },
+],
+
+desserts: [
+  { name: "Gulab Jamun", price: 210 },
+  { name: "Kaddu Ki Kheer", price: 210 },
+  { name: "Shahi Tukda", price: 220 },
+  { name: "Apricorn Delight", price: 240 },
+]
+
+};
+
+/* ===== GENERATE MENU ===== */
+
+const menuContainer=document.getElementById("menuContainer");
+const categoryBar=document.getElementById("categoryBar");
+
+Object.keys(menuData).forEach((category,index)=>{
+
+const btn=document.createElement("button");
+btn.className="category-btn";
+if(index===0) btn.classList.add("active");
+
+btn.innerText=category;
+btn.onclick=()=>goTo(category);
+
+categoryBar.appendChild(btn);
+
+const section=document.createElement("div");
+section.className="menu-category";
+section.id=category;
+
+const title=document.createElement("h2");
+title.innerText=category;
+section.appendChild(title);
+
+menuData[category].forEach(item=>{
+
+const div=document.createElement("div");
+div.className="item";
+
+div.innerHTML=`
+<span>${item.name}</span>
+<span>₹${item.price}
+<button class="add-btn"
+onclick="addToCart('${item.name}',${item.price})">
+Add
+</button>
+</span>`;
+
+section.appendChild(div);
+
+});
+
+menuContainer.appendChild(section);
+
+});
+
+/* ===== QR TABLE LOGIC ===== */
+
+const params=new URLSearchParams(window.location.search);
+const qrTable=params.get("table");
+
+if(qrTable){
+localStorage.setItem("tableNo",qrTable);
+}
+
+document.getElementById("tableNo").innerText=
+"TABLE "+(localStorage.getItem("tableNo")||"--");
+
+/* ===== CART ===== */
+
+let cart=JSON.parse(localStorage.getItem("cart"))||[];
+
+function addToCart(name,price){
+
+const found=cart.find(i=>i.name===name);
+
+if(found) found.qty++;
+else cart.push({name,price,qty:1});
+
+localStorage.setItem("cart",JSON.stringify(cart));
+
+updateCart();
+
+}
+
+function updateCart(){
+
+let count=0;
+
+cart.forEach(i=>count+=i.qty);
+
+document.getElementById("cartCount").innerText=count;
+
+}
+
+function goToCart(){
+
+window.location.href="cart.html";
+
+}
+
+function goTo(id){
+
+document.getElementById(id)
+.scrollIntoView({behavior:"smooth"});
+
+document.querySelectorAll(".category-btn")
+.forEach(b=>b.classList.remove("active"));
+
+event.target.classList.add("active");
+
+}
+
+updateCart();
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>HOTEL TRIMUKHA</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+/* BODY */
+
+body{
+background:linear-gradient(135deg,#6e1414,#8b4513,#f7e7c6);
+color:#fff;
+overflow-x:visiable;
+}
+
+/* NAVBAR (UPDATED TO MATCH BACKGROUND THEME) */
+
+.navbar{
+position:fixed;
+top:0;
+width:100%;
+padding:16px 30px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+background:linear-gradient(135deg,#6e1414,#8b4513);
+z-index:1000;
+box-shadow:0 6px 20px rgba(0,0,0,0.6);
+backdrop-filter:blur(6px);
+}
+
+.logo{
+color:#ffd95a;
+font-size:26px;
+font-weight:700;
+letter-spacing:1px;
+}
+
+.nav-links{
+display:flex;
+}
+
+.nav-links a{
+color:#fff8dc;
+margin-left:25px;
+text-decoration:none;
+font-weight:500;
+transition:0.3s;
+}
+
+.nav-links a:hover{
+color:#ffd95a;
+}
+
+.toggle{
+display:none;
+font-size:26px;
+color:#ffd95a;
+cursor:pointer;
+}
+
+/* HERO */
+
+.hero{
+height:100vh;
+position:relative;
+overflow:hidden;
+}
+
+.slides{
+display:flex;
+height:100%;
+width:300%;
+transition:transform 1s ease-in-out;
+}
+
+.slide{
+width:100%;
+height:100%;
+flex-shrink:0;
+}
+
+.slide img{
+width:100%;
+height:100%;
+object-fit:cover;
+}
+
+.hero::after{
+content:"";
+position:absolute;
+inset:0;
+background:linear-gradient(180deg,rgba(0,0,0,0.6),rgba(90,15,15,0.7));
+}
+
+.hero-content{
+position:absolute;
+inset:0;
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center;
+z-index:2;
+}
+
+.hero-content h2{
+font-size:48px;
+color:#ffd95a;
+text-shadow:0 0 10px rgba(0,0,0,0.8);
+}
+
+.hero-content p{
+margin:15px 0;
+color:#fff8dc;
+}
+
+/* BUTTON */
+
+.btn{
+display:inline-block;
+padding:12px 30px;
+margin:10px;
+background:linear-gradient(90deg,#7b1111,#b45309,#ffd95a);
+color:#fff;
+text-decoration:none;
+border-radius:30px;
+font-weight:600;
+transition:0.3s;
+box-shadow:0 6px 15px rgba(0,0,0,0.5);
+}
+
+.btn:hover{
+transform:scale(1.07);
+box-shadow:0 8px 20px rgba(0,0,0,0.7);
+}
+
+.btn.outline{
+background:transparent;
+border:2px solid #ffd95a;
+}
+
+/* VIDEO HERO */
+
+.video-hero{
+position:relative;
+height:100vh;
+overflow:hidden;
+}
+
+.video-hero video{
+width:100%;
+height:100%;
+object-fit:cover;
+}
+
+.video-overlay{
+position:absolute;
+inset:0;
+background:linear-gradient(180deg,rgba(0,0,0,0.6),rgba(139,69,19,0.7));
+}
+
+.hero-text{
+position:absolute;
+inset:0;
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+text-align:center;
+z-index:2;
+}
+
+.hero-text h1{
+font-size:48px;
+color:#ffd95a;
+text-shadow:0 0 12px rgba(0,0,0,0.8);
+}
+
+.hero-text p{
+margin:15px 0;
+color:#fff8dc;
+}
+
+.hero-btn{
+padding:14px 34px;
+background:linear-gradient(90deg,#7b1111,#b45309,#ffd95a);
+color:#fff;
+text-decoration:none;
+border-radius:30px;
+font-weight:600;
+}
+
+/* SPECIALS */
+
+.specials{
+padding:90px 30px;
+text-align:center;
+}
+
+.specials h2{
+color:#ffd95a;
+margin-bottom:40px;
+font-size:32px;
+}
+
+.cards{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:25px;
+}
+
+.card{
+background:linear-gradient(145deg,#6e1414,#8b4513);
+border-radius:18px;
+overflow:hidden;
+border:1px solid rgba(255,255,255,0.15);
+box-shadow:0 8px 20px rgba(0,0,0,0.6);
+transition:0.3s;
+}
+
+.card:hover{
+transform:translateY(-6px) scale(1.03);
+}
+
+.card img{
+width:100%;
+height:200px;
+object-fit:cover;
+}
+
+.card h3{
+color:#ffd95a;
+margin:15px;
+}
+
+/* FOOTER */
+
+footer{
+background:linear-gradient(90deg,#6e1414,#8b4513);
+padding:15px;
+text-align:center;
+color:#fff8dc;
+}
+
+/* MOBILE */
+
+ @media(max-width:768px){
+
+.toggle{
+display:block;
+}
+
+.nav-links{
+position:absolute;
+top:70px;
+left:0;
+width:100%;
+background:linear-gradient(135deg,#6e1414,#8b4513);
+flex-direction:column;
+display:none;
+padding:10px 0;
+box-shadow:0 10px 20px rgba(0,0,0,0.6);
+}
+
+.nav-links.show{
+display:flex;
+}
+
+.nav-links a{
+margin:0;
+padding:14px 25px;
+border-bottom:1px solid rgba(255,255,255,0.15);
+font-size:16px;
+}
+
+.nav-links a:last-child{
+border-bottom:none;
+}
+
+.nav-links a:hover{
+background:rgba(255,217,90,0.15);
+color:#ffd95a;
+}
+
+}
+/* BOTTOM NAV */
+
+.bottom-nav{
+position:fixed;
+bottom:0;
+left:0;
+width:100%;
+height:70px;
+background:linear-gradient(135deg,#6e1414,#8b4513,#5a0f0f);
+display:flex;
+justify-content:space-around;
+align-items:center;
+border-top:1px solid rgba(255,255,255,0.1);
+box-shadow:0 -5px 15px rgba(0,0,0,0.5);
+z-index:9999;
+backdrop-filter:blur(8px);
+}
+
+.bottom-nav a{
+color:#fff8dc;
+text-decoration:none;
+font-size:11px;
+display:flex;
+flex-direction:column;
+align-items:center;
+transition:0.3s;
+}
+
+.bottom-nav i{
+font-size:20px;
+margin-bottom:4px;
+}
+
+.bottom-nav a.active,
+.bottom-nav a:hover{
+color:#ffd95a;
+transform:scale(1.1);
+}
+</style>
+</head>
+
+<body>
+
+<header class="navbar">
+<div class="logo">TRIMUKHA</div>
+
+<div class="toggle" onclick="toggleMenu()">
+<i class="fas fa-bars"></i>
+</div>
+
+<nav class="nav-links" id="navLinks">
+<a href="index.html">Home</a>
+<a href="menu.html">Menu</a>
+<a href="about.html">About</a>
+<a href="gallery.html">Gallery</a>
+<a href="contact.html">Contact</a>
+</nav>
+
+</header>
+
+<section class="hero">
+
+<div class="slides" id="slides">
+
+<div class="slide"><img src="1c.jpg"></div>
+<div class="slide"><img src="2.jpg"></div>
+<div class="slide"><img src="3.jpg"></div>
+<div class="slide"><img src="4.jpg"></div>
+<div class="slide"><img src="5.jpg"></div>
+
+</div>
+
+<div class="hero-content">
+<div>
+<h2>Experience The Royal Taste</h2>
+<p>Authentic flavors • Premium dining</p>
+
+<a href="table.html" class="btn">View Menu</a>
+<a href="https://wa.me/+918897302149" class="btn outline">Order on WhatsApp</a>
+
+</div>
+</div>
+
+</section>
+
+<section class="video-hero">
+
+<video autoplay muted loop playsinline>
+<source src="video.mp4" type="video/mp4">
+</video>
+
+<div class="video-overlay"></div>
+
+<div class="hero-text">
+<h1>HOTEL TRIMUKHA</h1>
+<p>Authentic Taste • Royal Experience</p>
+<a href="menu.html" class="hero-btn">Order Now</a>
+</div>
+
+</section>
+
+<section class="specials">
+
+<h2>Chef’s Specials</h2>
+
+<div class="cards">
+
+<div class="card">
+<img src="biryani.jpg">
+<h3>Special Biryani</h3>
+</div>
+
+<div class="card">
+<img src="f.jpg">
+<h3>Tandoori Platter</h3>
+</div>
+
+</div>
+
+<nav class="bottom-nav">
+
+<a href="index.html" class="active">
+<i class="fas fa-home"></i>
+<span>Home</span>
+</a>
+
+<a href="about.html">
+<i class="fas fa-info-circle"></i>
+<span>About</span>
+</a>
+
+<a href="menu.html">
+<i class="fas fa-utensils"></i>
+<span>Menu</span>
+</a>
+
+<a href="gallery.html">
+<i class="fas fa-image"></i>
+<span>Gallery</span>
+</a>
+
+<a href="contact.html">
+<i class="fas fa-phone"></i>
+<span>Contact</span>
+</a>
+
+</nav>
+
+</section>
+
+<footer>© 2026 HOTEL TRIMUKHA</footer>
+
+<script>
+
+function toggleMenu(){
+document.getElementById("navLinks").classList.toggle("show");
+}
+
+let index=0;
+const slides=document.getElementById("slides");
+
+setInterval(()=>{
+index=(index+1)%3;
+slides.style.transform=`translateX(-${index*100}%)`;
+},4000);
+
+
+
+</script>
+
+</body>
+</html>

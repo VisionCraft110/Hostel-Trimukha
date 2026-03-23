@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact - Hotel Trimukha</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<!-- ICONS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+background:linear-gradient(135deg,#6e1414,#8b4513,#f7e7c6);
+color:#fff;
+overflow-x:hidden;
+padding-bottom:120px;
+}
+
+.header{
+text-align:center;
+padding:70px 20px 40px;
+animation:fadeDown 1s ease;
+}
+
+.header h1{
+font-size:42px;
+font-weight:700;
+color:#ffd95a;
+}
+
+.header h2{
+font-size:18px;
+margin-top:10px;
+color:#fff8dc;
+}
+
+.container{
+width:90%;
+max-width:900px;
+margin:30px auto;
+display:flex;
+flex-direction:column;
+gap:30px;
+}
+
+.block{
+background:linear-gradient(145deg,#6e1414,#8b4513);
+border:1px solid rgba(255,255,255,0.15);
+padding:30px;
+border-radius:20px;
+box-shadow:0 8px 20px rgba(0,0,0,0.6);
+transform:scale(0.8);
+opacity:0;
+transition:all 0.5s ease;
+cursor:pointer;
+}
+
+.block.active{
+transform:scale(1);
+opacity:1;
+}
+
+.block h3{
+font-size:26px;
+margin-bottom:20px;
+color:#ffd95a;
+}
+
+.info{
+margin:12px 0;
+font-size:16px;
+display:flex;
+align-items:center;
+gap:10px;
+color:#fff8dc;
+}
+
+.buttons{
+margin-top:20px;
+display:flex;
+gap:20px;
+}
+
+.btn{
+flex:1;
+padding:12px;
+border:none;
+border-radius:25px;
+font-weight:600;
+cursor:pointer;
+transition:0.3s;
+background:linear-gradient(90deg,#7b1111,#b45309,#ffd95a);
+color:#fff;
+}
+
+.btn:hover{
+transform:scale(1.05);
+box-shadow:0 8px 18px rgba(0,0,0,0.6);
+}
+
+iframe{
+width:100%;
+height:300px;
+border-radius:15px;
+border:none;
+margin-top:15px;
+box-shadow:0 8px 20px rgba(0,0,0,0.6);
+}
+
+/* 🔥 BOTTOM NAVBAR */
+
+.bottom-nav{
+position:fixed;
+bottom:0;
+left:0;
+width:100%;
+height:70px;
+background:linear-gradient(145deg,#6e1414,#8b4513);
+display:flex;
+justify-content:space-around;
+align-items:center;
+border-top:1px solid rgba(255,255,255,0.2);
+box-shadow:0 -5px 20px rgba(0,0,0,0.6);
+z-index:1000;
+}
+
+.nav-item{
+text-decoration:none;
+color:#fff8dc;
+display:flex;
+flex-direction:column;
+align-items:center;
+font-size:12px;
+transition:0.3s;
+}
+
+.nav-item i{
+font-size:20px;
+margin-bottom:3px;
+}
+
+.nav-item:hover{
+color:#ffd95a;
+transform:scale(1.1);
+}
+
+.nav-item.active{
+color:#ffd95a;
+}
+
+@keyframes fadeDown{
+from{
+opacity:0;
+transform:translateY(-40px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="header">
+<h1>Welcome to Hotel Trimukha 🍽️</h1>
+<h2>Hotel Trimukha is for you 💛</h2>
+</div>
+
+<div class="container">
+
+<div class="block" id="contactBlock">
+
+<h3>🤝 Get in Touch</h3>
+
+<div class="info">📍 <strong>Location:</strong> Hotel Trimukha, Tukkuguda, Hyderabad, Malikdanguda</div>
+
+<div class="info">📞 <strong>Contact No:</strong> 9701029034</div>
+
+<div class="buttons">
+
+<button class="btn" onclick="openWhatsApp()">
+WhatsApp 💬
+</button>
+
+<button class="btn" onclick="makeCall()">
+Call 📲
+</button>
+
+</div>
+
+</div>
+
+<div class="block" id="mapBlock">
+
+<h3>🗺️ Our Location on Map</h3>
+
+<!-- Correct Map -->
+<iframe src="https://maps.google.com/maps?q=Tukkuguda%20Hyderabad&t=&z=15&ie=UTF8&iwloc=&output=embed"></iframe>
+
+</div>
+
+</div>
+
+<div class="bottom-nav">
+
+<a href="index.html" class="nav-item">
+<i class="fas fa-home"></i>
+<span>Home</span>
+</a>
+
+<a href="about.html" class="nav-item">
+<i class="fas fa-user"></i>
+<span>About</span>
+</a>
+
+<a href="menu.html" class="nav-item">
+<i class="fas fa-utensils"></i>
+<span>Menu</span>
+</a>
+
+<a href="gallery.html" class="nav-item">
+<i class="fas fa-image"></i>
+<span>Gallery</span>
+</a>
+
+<a href="contact.html" class="nav-item active">
+<i class="fas fa-phone"></i>
+<span>Contact</span>
+</a>
+
+</div>
+
+<script>
+
+window.onload=function(){
+setTimeout(()=>document.getElementById("contactBlock").classList.add("active"),300);
+setTimeout(()=>document.getElementById("mapBlock").classList.add("active"),600);
+}
+
+function openWhatsApp(){
+window.open("https://wa.me/9701029034","_blank");
+}
+
+function makeCall(){
+window.location.href="tel:9701029034";
+}
+
+</script>
+
+</body>
+</html>
