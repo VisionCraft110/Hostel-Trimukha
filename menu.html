@@ -185,18 +185,130 @@ transition:0.3s;
 transform:scale(1.05);
 box-shadow:0 6px 15px rgba(0,0,0,0.5);
 }
+  
+  .counter {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
 
+.counter button {
+    width: 25px;
+    height: 25px;
+    border: none;
+    background: #333;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.count {
+    font-weight: bold;
+}
+.top-header{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:90px;
+z-index:9999;
+background:linear-gradient(135deg,#6e1414,#8b4513);
+box-shadow:0 6px 20px rgba(0,0,0,0.6);
+display:flex;
+align-items:center;
+justify-content:center;
+}
+
+.top-header h3{
+color:#fff;
+font-size:20px;
+font-weight:600;
+}
+
+/* LEFT */
+.back-btn{
+position:absolute;
+left:15px;
+top:50%;
+transform:translateY(-50%);
+width:36px;
+height:36px;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+color:#ffd95a;
+background:linear-gradient(135deg,#6e1414,#8b4513);
+}
+
+/* TABLE */
+.corner-table{
+position:absolute;
+left:60px;
+top:50%;
+transform:translateY(-50%);
+background:#ffd95a;
+color:#6e1414;
+padding:5px 12px;
+font-size:12px;
+border-radius:20px;
+font-weight:600;
+}
+
+/* RIGHT */
+.cart-icon{
+position:absolute;
+right:15px;
+top:50%;
+transform:translateY(-50%);
+color:#ffd95a;
+font-size:20px;
+}
+
+/* PUSH CONTENT DOWN */
+body{
+padding-top:100px;
+}
+
+/* LEFT ARROW */
+.back-btn{
+position:absolute;
+left:15px;
+top:35%;   /* 🔥 before 50% → now paiki */
+transform:translateY(-50%);
+width:36px;
+height:36px;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+color:#ffd95a;
+background:linear-gradient(135deg,#6e1414,#8b4513);
+}
+
+/* TABLE */
+.corner-table{
+position:absolute;
+left:25px;
+top:80%;   /* 🔥 before 50% → now kindhiki */
+transform:translateY(-50%);
+background:#ffd95a;
+color:#6e1414;
+padding:5px 12px;
+font-size:12px;
+border-radius:20px;
+font-weight:600;
+}
 </style>
 </head>
 
 <body>
 
-<div class="table-header">
-    <a href="index.html" class="back-btn">
+<div class="top-header">
+
+<a href="index.html" class="back-btn">
 <i class="fas fa-arrow-left"></i>
 </a>
-</div>
-<div class="table-card">
 
 <div class="corner-table" id="tableNo">TABLE --</div>
 
@@ -205,6 +317,8 @@ box-shadow:0 6px 15px rgba(0,0,0,0.5);
 <div class="cart-icon" onclick="goToCart()">
 <i class="fas fa-shopping-cart"></i>
 <span id="cartCount">0</span>
+</div>
+
 </div>
 
 </div>
@@ -562,10 +676,11 @@ div.className="item";
 div.innerHTML=`
 <span>${item.name}</span>
 <span>₹${item.price}
-<button class="add-btn"
-onclick="addToCart('${item.name}',${item.price})">
-Add
-</button>
+<div id="item-container">
+    <button class="add-btn" onclick="showCounter(this, '${item.name}', ${item.price})">
+        Add
+    </button>
+</div>
 </span>`;
 
 section.appendChild(div);
@@ -634,7 +749,48 @@ event.target.classList.add("active");
 }
 
 updateCart();
+  
+  function showCounter(btn, name, price) {
+    // Replace Add button with counter
+    btn.outerHTML = `
+        <div class="counter">
+            <button onclick="decrease(this, '${name}', ${price})">-</button>
+            <span class="count">1</span>
+            <button onclick="increase(this, '${name}', ${price})">+</button>
+        </div>
+    `;
 
+    addToCart(name, price, 1);
+}
+
+function increase(btn, name, price) {
+    let countEl = btn.parentElement.querySelector('.count');
+    let count = parseInt(countEl.innerText);
+    count++;
+    countEl.innerText = count;
+
+    addToCart(name, price, 1);
+}
+
+function decrease(btn, name, price) {
+    let parent = btn.parentElement;
+    let countEl = parent.querySelector('.count');
+    let count = parseInt(countEl.innerText);
+
+    if (count > 1) {
+        count--;
+        countEl.innerText = count;
+        addToCart(name, price, -1);
+    } else {
+        // Back to Add button
+        parent.outerHTML = `
+            <button class="add-btn" onclick="showCounter(this, '${name}', ${price})">
+                Add
+            </button>
+        `;
+        addToCart(name, price, -1);
+    }
+}
 </script>
 
 </body>
