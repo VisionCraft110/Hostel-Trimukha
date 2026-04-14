@@ -32,14 +32,15 @@ position:fixed;
 top:0;
 width:100%;
 background:linear-gradient(90deg,#5a0f0f,#7b2c2c,#8b4513);
-padding:16px 30px;
+padding:16px 20px;
 display:flex;
 align-items:center;
-justify-content:space-between;
+justify-content:center; /* center title */
 box-shadow:0 6px 20px rgba(0,0,0,0.6);
 z-index:1000;
 }
 
+/* TITLE CENTER */
 .header h2{
 color:#ffd95a;
 font-size:26px;
@@ -47,7 +48,22 @@ font-weight:700;
 letter-spacing:1px;
 }
 
-.header a{
+/* LEFT ARROW */
+.header .back-btn{
+position:absolute;
+left:15px;
+top:50%;
+transform:translateY(-50%);
+color:#ffd95a;
+font-size:20px;
+}
+
+/* RIGHT CLEAR ICON */
+.header .clear-btn{
+position:absolute;
+right:15px;
+top:50%;
+transform:translateY(-50%);
 color:#ffd95a;
 font-size:20px;
 }
@@ -221,9 +237,17 @@ font-size:16px;
 <!-- HEADER -->
 
 <div class="header">
-<a href="menu.html"><i class="fas fa-arrow-left"></i></a>
+
+<a href="menu.html" class="back-btn">
+<i class="fas fa-arrow-left"></i>
+</a>
+
 <h2>YOUR CART</h2>
-<span></span>
+
+<a href="#" onclick="clearCart()" class="clear-btn">
+<i class="fas fa-rotate-right"></i>
+</a>
+
 </div>
 
 <!-- CART -->
@@ -257,6 +281,16 @@ Place Order on WhatsApp
 </div>
 
 <script>
+
+function clearCart(){
+
+if(confirm("Clear entire cart?")){
+localStorage.removeItem("cart");
+cart = [];
+renderCart();
+}
+
+}
 
 /* LOAD DATA */
 
@@ -356,7 +390,7 @@ msg += "\nTotal Amount: Rs." + total;
 let encodedMsg = encodeURIComponent(msg);
 
 window.open(
-"https://wa.me/9177187119?text=" + encodedMsg,
+"https://wa.me/9154729034?text=" + encodedMsg,
 "_blank"
 );
 
