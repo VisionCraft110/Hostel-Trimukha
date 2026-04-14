@@ -131,7 +131,46 @@ font-size:18px;
 font-weight:600;
 color:#fff8dc;
 }
+  
+  /* TAKEAWAY CARD */
 
+.takeaway-card{
+background:linear-gradient(145deg,#6e1414,#8b4513);
+border-radius:18px;
+height:140px;
+border:1px solid rgba(255,255,255,0.2);
+box-shadow:0 8px 25px rgba(0,0,0,0.7);
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+cursor:pointer;
+transition:.3s;
+max-width:350px;
+margin:20px auto;
+}
+
+.takeaway-card:hover{
+transform:scale(1.05);
+}
+
+/* OR TEXT */
+
+.or-text{
+margin-top:10px;
+font-size:20px;
+font-weight:700;
+color:#ffd95a;
+letter-spacing:2px;
+}
+
+/* HEADING */
+
+.table-heading{
+margin-top:10px;
+color:#fff8dc;
+font-size:20px;
+}
 /* FOOTER */
 
 footer{
@@ -219,8 +258,19 @@ height:140px;
 
 <section class="container">
 
-<h1>Select Your Table</h1>
-<p>Please choose a table to continue ordering</p>
+<h1>Select Your Option</h1>
+<p>Please choose your option to view menu </p>
+
+<!-- TAKEAWAY CARD -->
+
+<div class="takeaway-card" onclick="goTakeaway()">
+    <div class="table-icon"><i class="fas fa-bag-shopping"></i></div>
+    <div class="table-no">Takeaway</div>
+</div>
+
+<div class="or-text">OR</div>
+
+<h2 class="table-heading">Choose Table Number</h2>
 
 <div class="tables"></div>
 
@@ -264,7 +314,10 @@ window.location.href="menu.html";
 tablesDiv.appendChild(card);
 
 }
-
+function goTakeaway(){
+localStorage.setItem("tableNo","Takeaway");
+window.location.href="menu.html";
+}
 </script>
 
 </body>
