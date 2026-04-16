@@ -656,8 +656,7 @@ btn.className="category-btn";
 if(index===0) btn.classList.add("active");
 
 btn.innerText=category;
-btn.onclick=()=>goTo(category);
-
+btn.onclick=(e)=>goTo(category, e);
 categoryBar.appendChild(btn);
 
 const section=document.createElement("div");
@@ -707,17 +706,23 @@ document.getElementById("tableNo").innerText=
 
 let cart=JSON.parse(localStorage.getItem("cart"))||[];
 
-function addToCart(name,price){
+function addToCart(name, price, change = 1) {
 
-const found=cart.find(i=>i.name===name);
+    const item = cart.find(i => i.name === name);
 
-if(found) found.qty++;
-else cart.push({name,price,qty:1});
+    if (item) {
+        item.qty += change;
 
-localStorage.setItem("cart",JSON.stringify(cart));
+        if (item.qty <= 0) {
+            cart = cart.filter(i => i.name !== name);
+        }
 
-updateCart();
+    } else if (change > 0) {
+        cart.push({ name, price, qty: 1 });
+    }
 
+    localStorage.setItem("cart", JSON.stringify(cart));
+    updateCart();
 }
 
 function updateCart(){
@@ -736,7 +741,7 @@ window.location.href="cart.html";
 
 }
 
-function goTo(id){
+function goTo(id, e){
 
 document.getElementById(id)
 .scrollIntoView({behavior:"smooth"});
@@ -744,7 +749,7 @@ document.getElementById(id)
 document.querySelectorAll(".category-btn")
 .forEach(b=>b.classList.remove("active"));
 
-event.target.classList.add("active");
+e.target.classList.add("active");
 
 }
 
